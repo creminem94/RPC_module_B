@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<robot name="scara">
+
+    <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0 0 0" />
+            </geometry>
+            <material name="white"/>
+        </visual>
+    </link>
+    <joint name="base_to_L1" type="fixed">
+        <parent link="base_link"/>
+        <child link="L1"/>
+        <origin xyz="0 0 0" />
+    </joint>
+    <link name="L1">
+        <visual>
+            <geometry>
+                <box size="0.25 0.25 0.4"></box>
+            </geometry>
+            <material name="blue"/>
+            <origin xyz="0 0 0.2" />
+        </visual>
+    </link>
+    <joint name="J1" type="revolute">
+        <origin xyz="0 0 0.4"/>
+        <axis xyz="0 0 1" />
+        <parent link="L1"/>
+        <child link="L2"/>
+        <limit effort="30" velocity="1.0" lower="-2.5" upper="2.5" />
+    </joint>
+    <link name="L2">
+        <visual>
+            <geometry>
+                <box size="0.3 0.2 0.2"></box>
+            </geometry>
+            <material name="black"/>
+            <origin xyz="0.15 0 0" />
+        </visual>
+    </link>
+    <joint name="J2" type="revolute">
+        <origin xyz="0.3 0 0"/>
+        <axis xyz="0 0 1" />
+        <parent link="L2"/>
+        <child link="L3"/>
+        <limit effort="30" velocity="1.0" lower="-2" upper="2" />
+    </joint>
+    <link name="L3">
+        <visual>
+            <geometry>
+                <box size="0.3 0.15 0.15"></box>
+            </geometry>
+            <material name="white"/>
+            <origin xyz="0.15 0 0" />
+        </visual>
+    </link>
+    <joint name="J3" type="prismatic">
+        <origin xyz="0.3 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1" />
+        <parent link="L3"/>
+        <child link="L4"/>
+        <limit effort="30" velocity="0.2" lower="0" upper="0.45" />
+    </joint>
+    <link name="L4">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.5"></cylinder>
+            </geometry>
+            <origin xyz="0 0 -0.25"/>
+            <material name="blue"/>
+        </visual>
+    </link>
+    <joint name="J4" type="revolute">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1" />
+        <parent link="L4"/>
+        <child link="fake_link"/>
+        <limit effort="30" velocity="1.0" lower="-3" upper="3" />
+    </joint>
+    <link name="fake_link">
+        <visual>
+            <geometry>
+                <box size="0 0 0" />
+            </geometry>
+            <origin xyz="0 0 -0.5"/>
+            <material name="white"/>
+        </visual>
+    </link>
+    <joint name="ee" type="fixed">
+        <origin xyz="0 0 -0.5" rpy="0 0 0"/>
+        <axis xyz="0 0 1" />
+        <parent link="fake_link"/>
+        <child link="ee_link"/>
+    </joint>
+    <link name="ee_link">
+        <visual>
+            <geometry>
+                <box size="0 0 0" />
+            </geometry>
+            <material name="white"/>
+        </visual>
+    </link>
+</robot>
